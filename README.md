@@ -35,7 +35,7 @@ Finally start the project
     npm run start:dev
 ```
 
-If everything worked as expected you can visit [http://localhost:3001/users](http://localhost:3001/users)
+If everything worked as expected you can visit [http://localhost:5000/users](http://localhost:3001/users)
 and you will get a json resposne with a user seeded.
 
 ## Author
