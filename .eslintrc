@@ -1,0 +1,21 @@
+
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion":2016,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true
+  },
+  "settings": {
+    "import/resolver" : {
+      "alias" : true
+    }
+  }
+}
+
+
+
+
