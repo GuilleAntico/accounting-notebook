@@ -16,7 +16,7 @@ class ApiError extends Error {
                 break;
             case 'AuthToken':
                 this.code = 401;
-                this.message = 'No token present in header';
+                this.message = 'No token present or invalid in header';
                 break;
             case 'FacebookApiException':
                 this.code = 401;

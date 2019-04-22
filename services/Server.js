@@ -11,6 +11,8 @@ const models = require('app/models');
 const routes = require('app/routes');
 const errorHandler = require('app/middlewares/errorHandler');
 const mongoose = require('mongoose');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 class Server {
     static async setupExpress() {
@@ -110,6 +112,37 @@ class Server {
             return Promise.reject(error);
         }
     }
+    
+    static async setupSwagger(app) {
+        const options = {
+            swaggerDefinition: {
+                info: {
+                    title: 'Articles API',
+                    version: '1.0.0',
+                    description: 'Test Express API with swagger doc',
+                },
+                securityDefinitions: {
+                    ApiKeyAuth: {
+                        type: 'apiKey',
+                        name: 'Authorization',
+                        in: 'header'
+                    }
+                },
+                security: [
+                    { "ApiKeyAuth": []}
+                ],
+            },
+            apis: ['app/routes/*.route.js'],
+        };
+        const specs = swaggerJsdoc(options);
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+        app.get('/api-docs.json', (req, res) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(specs);
+        });
+    
+    }
+    
     static async setupErrorHandler(app) {
         try {
             app.use((error, req, res, next) => errorHandler(error, req, res, next));
@@ -135,6 +168,7 @@ class Server {
             await this.setupLogger(app);
             await this.setupCORS(app);
             await this.setupRoutes(app);
+            await this.setupSwagger(app);
             await this.setupErrorHandler(app);
             devConsole.info('Bootstrapping done!!');
             await this.startService(app);

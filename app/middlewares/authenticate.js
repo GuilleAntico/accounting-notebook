@@ -4,7 +4,7 @@ const config = require('config');
 
 const jwtSecret = config.get('jwtSecret');
 const DevConsole = require('@devConsole');
-const { generateToken } = require('devUtilities/token');
+const { generateToken } = require('devUtilities/tokenGenerator');
 const ApiError = require('app/error/ApiError');
 
 const devConsole = new DevConsole(__filename);
@@ -23,10 +23,10 @@ module.exports = (req, res, next) => {
     const resOverride = {
         end: () => {
             devConsole.error('HTTP Status 401 - Unauthorized error in authenticate');
-            res.status(401).end('Unauthorized');
+            throw new ApiError('AuthToken');
         }
     };
-    if(process.env.NODE_ENV === 'development'){
+    if(config.get('nodeEnv') === 'development'){
         devConsole.info('Forcing token match');
         const headerToken = req.headers.authorization;
         const envToken = config.get('apiToken');
