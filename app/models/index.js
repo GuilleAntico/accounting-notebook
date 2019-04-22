@@ -1,14 +1,8 @@
 const path = require('path');
-const bookshelf = require('bookshelf');
 const fs = require('fs');
 
 module.exports = (app) =>{
-    const knex = app.get('knex');
-    const bookshelfInstance = bookshelf(knex);
-    bookshelfInstance.plugin('registry');
-    bookshelfInstance.plugin('visibility');
-    bookshelfInstance.plugin('virtuals');
-    app.set('bookshelf', bookshelfInstance);
+    
     
     const modelsPath = path.join(__dirname, "./");
     

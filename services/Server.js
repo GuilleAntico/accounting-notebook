@@ -4,13 +4,13 @@ const helmet = require('helmet');
 const cors = require('cors');
 const config = require('config');
 const port = config.get('port');
-const knexInterface = require('communications/knexConnections');
 const DevConsole = require('@devConsole');
 const devConsole = new DevConsole(__filename);
 const morganMiddleware = require('app/config/morgan');
 const models = require('app/models');
 const routes = require('app/routes');
 const errorHandler = require('app/middlewares/errorHandler');
+const mongoose = require('mongoose');
 
 class Server {
     static async setupExpress() {
@@ -42,9 +42,11 @@ class Server {
     }
     static async setupDatabase(app) {
         try {
-            // Create knex connection
-            await knexInterface.createConnection(app);
-            
+            const mongodbConfig = config.get('mongodb');
+            // Create mongoose connection
+            const { connection } = await mongoose.connect(`mongodb://${mongodbConfig.host}/${mongodbConfig.name}`, { useNewUrlParser: true });
+            app.set('mongoose', connection);
+    
             // Setup models
             const modelInstances = models(app);
             app.set('models', modelInstances);
