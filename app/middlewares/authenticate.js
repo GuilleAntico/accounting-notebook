@@ -5,6 +5,7 @@ const config = require('config');
 const jwtSecret = config.get('jwtSecret');
 const DevConsole = require('@devConsole');
 const { generateToken } = require('devUtilities/token');
+const ApiError = require('app/error/ApiError');
 
 const devConsole = new DevConsole(__filename);
 
@@ -25,16 +26,12 @@ module.exports = (req, res, next) => {
             res.status(401).end('Unauthorized');
         }
     };
-    if(process.env.NODE_ENV === 'development' && !req.headers.authorization){
-        devConsole.info('Bypassing token');
-        const object = {
-            id: 1,
-            first_name: 'Guille',
-            last_name: 'Antico',
-            email: 'guille@antico.com'
-        };
-        const token = generateToken(object);
-        req.headers.authorization = `Bearer ${token}`
+    if(process.env.NODE_ENV === 'development'){
+        devConsole.info('Forcing token match');
+        const headerToken = req.headers.authorization;
+        const envToken = config.get('apiToken');
+         if(!headerToken || headerToken !== envToken) throw new ApiError('AuthToken');
+         return next();
     }
     return passport.authenticate('jwt', { session: false })(req, resOverride, next);
 };

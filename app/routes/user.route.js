@@ -2,12 +2,13 @@
 const UserController = require('app/controllers/user.controller');
 const DevConsole = require('@devConsole');
 const devConsole = new DevConsole(__filename);
+const authenticate = require('@authenticate');
 
 module.exports = (app, express) => {
     const userController = new UserController(app);
     const api            = express.Router();
     
-    api.post('/', async (req, res, next)=>{
+    api.post('/', authenticate, async (req, res, next)=>{
         try{
             const data = req.body;
             devConsole.info(`creating user with data ${data}`);
