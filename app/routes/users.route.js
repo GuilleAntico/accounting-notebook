@@ -42,6 +42,15 @@ module.exports = (app, express) => {
      *                          "name": "Guillermo",
      *                          "avatar": "http://avatar.com"
      *                      }
+     *          401:
+     *              description: Authorization Error
+     *              examples:
+     *                  application/json:
+     *                      {
+     *                          "code": 403,
+     *                          "message": "token not present or invalid in header"
+     *                      }
+     *
      */
     api.post('/', authenticate, async (req, res, next)=>{
         try{
@@ -56,8 +65,5 @@ module.exports = (app, express) => {
         }
         
     });
-    api.post('/pepe', async (req, res, next)=> {
-        res.send('ok');
-    })
     app.use('/users', api);
 }
