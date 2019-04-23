@@ -131,7 +131,10 @@ describe('ArticleController Unit Test', ()=> {
             }
         ]
         const query = 'tags=tag1,tag2&title=title'
-        afterEach(()=> sandbox.restore());
+        afterEach(()=> {
+            sandbox.restore();
+            sinon.restore();
+        });
         
         it('should return ok if found', async()=>{
             sinon.mock(Article)
@@ -143,6 +146,18 @@ describe('ArticleController Unit Test', ()=> {
             const result = await ArticleController.search(query);
             
             expect(result).to.deep.equal(expectedArticle);
+        });
+    
+        it('should return empty if found', async()=>{
+            sinon.mock(Article)
+            .expects('find')
+            .chain('populate')
+            .withArgs('user')
+            .resolves({});
+        
+            const result = await ArticleController.search(query);
+        
+            expect(result).to.deep.equal({});
         });
     });
 });
