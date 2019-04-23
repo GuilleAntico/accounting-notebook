@@ -1,6 +1,7 @@
 
 const userController = require('app/controllers/users.controller');
 const DevConsole = require('@devConsole');
+
 const devConsole = new DevConsole(__filename);
 const authenticate = require('@authenticate');
 

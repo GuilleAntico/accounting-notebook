@@ -2,6 +2,7 @@ const DevConsole = require('@devConsole');
 const { Types } = require('mongoose');
 const ApiError = require('app/error/ApiError');
 const { Article } = require('app/models');
+
 const devConsole = new DevConsole(__filename);
 
 class ArticleController {
@@ -31,6 +32,7 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    
     static async delete(articleId){
         try{
             return await Article.deleteOne({_id: new Types.ObjectId(articleId)})
@@ -39,6 +41,7 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    
     static async search(query){
         try{
             const searchCriteria = {...query};
@@ -53,6 +56,5 @@ class ArticleController {
         }
     }
 }
-
 
 module.exports = ArticleController;

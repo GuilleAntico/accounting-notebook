@@ -1,8 +1,8 @@
 require('module-alias/register');
 const cluster = require('cluster');
 const os = require('os');
-const ServerService = require('./services/Server');
 const config = require('config');
+const ServerService = require('./services/Server');
 
 if(cluster.isMaster){
     if(config.get('nodeEnv') === 'production'){

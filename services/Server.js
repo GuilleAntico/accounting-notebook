@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const config = require('config');
+
 const port = config.get('port');
 const DevConsole = require('@devConsole');
+
 const devConsole = new DevConsole(__filename);
 const morganMiddleware = require('app/config/morgan');
-const models = require('app/models');
 const routes = require('app/routes');
 const errorHandler = require('app/middlewares/errorHandler');
 const mongoose = require('mongoose');
@@ -42,7 +43,8 @@ class Server {
             return Promise.reject(error);
         }
     }
-    static async setupDatabase(app) {
+
+    static async setupDatabase() {
         try {
             const mongodbConfig = config.get('mongodb');
             // Create mongoose connection
@@ -50,7 +52,7 @@ class Server {
             mongoose.set('useFindAndModify', false);
             connection.on('open', ()=> devConsole.info('Database setup okay'));
             connection.on('error', ()=> devConsole.info('Database setup Error'));
-            
+            return true;
         } catch(error) {
             devConsole.error('Error setting up Database: ');
             return Promise.reject(error)
@@ -95,6 +97,7 @@ class Server {
             app.use(cors(corsOptions));
             app.options('*', cors(corsOptions));
             devConsole.info('CORS allowing origins:', allowedOrigins.map(origin=>origin.toString()));
+            return true;
         } catch (error) {
             devConsole.error('Error Setting CORS');
             return Promise.reject(error);
@@ -105,6 +108,7 @@ class Server {
         try {
             routes(app, express);
             devConsole.info('Routes set!');
+            return true;
         } catch(error) {
             devConsole.error('Error setting routes');
             return Promise.reject(error);
@@ -150,15 +154,18 @@ class Server {
             Promise.reject(error);
         }
     }
+
     static async startService(app) {
         try {
             await app.listen(app.get('port'));
             devConsole.info('Express up and running on port ', app.get('port'));
+            return true;
         } catch(error) {
             devConsole.error('Error initializing express');
             return Promise.reject(error);
         }
     }
+
     static async start() {
         try {
             const app = await this.setupExpress();

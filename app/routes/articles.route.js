@@ -1,6 +1,7 @@
 
 const articlesController = require('app/controllers/articles.controller');
 const DevConsole = require('@devConsole');
+
 const devConsole = new DevConsole(__filename);
 const authenticate = require('@authenticate');
 
@@ -241,7 +242,7 @@ module.exports = (app, express) => {
      */
     api.get('/', authenticate, async (req, res, next)=>{
         try{
-            const query = req.query;
+            const {query} = req;
             devConsole.info(`searching articles with query: ${query}`);
             const result = await articlesController.search(query);
             devConsole.info(`Article found ${JSON.stringify(result)}`);

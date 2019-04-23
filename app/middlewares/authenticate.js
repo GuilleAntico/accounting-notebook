@@ -4,7 +4,6 @@ const config = require('config');
 
 const jwtSecret = config.get('jwtSecret');
 const DevConsole = require('@devConsole');
-const { generateToken } = require('devUtilities/tokenGenerator');
 const ApiError = require('app/error/ApiError');
 
 const devConsole = new DevConsole(__filename);

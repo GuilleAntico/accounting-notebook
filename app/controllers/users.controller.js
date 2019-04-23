@@ -1,4 +1,5 @@
 const DevConsole = require('@devConsole');
+
 const devConsole = new DevConsole(__filename);
 const { User } = require('app/models');
 

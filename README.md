@@ -27,9 +27,14 @@ Finally start the project
     npm run start:dev
 ```
 
-If everything worked as expected you can visit [http://localhost:5000/api_doc](http://localhost:5000/api_doc)
+If everything worked as expected you can visit [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
 and you will get a swagger playground.
 
+##Testing
+To run the unit testing suit just run.
+```
+    npm run unit:test
+```
 ## Author
 
 * **Guillermo Antico** 
