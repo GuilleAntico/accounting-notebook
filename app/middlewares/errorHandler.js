@@ -1,7 +1,8 @@
 
 module.exports = (error, req, res) =>{
-    const errResponse = {...error};
-    errResponse.code = errResponse.code || 400;
+    const errResponse = {};
+    errResponse.code = error.code || 400;
+    errResponse.message = error.message || 'something went wrong, please try again.'
     if(errResponse.name === 'ValidationError'){
         errResponse.code = 400;
         errResponse.message = [];

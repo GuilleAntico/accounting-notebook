@@ -14,7 +14,7 @@ describe('UserController Unit Test', ()=> {
         })
         afterEach(()=> sandbox.restore());
         
-        it('should return the user if created was successful', async()=>{
+        it('should return the user if created successfully', async()=>{
             const testUser = {
                 _id: '1234',
                 name: 'Test',

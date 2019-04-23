@@ -1,7 +1,8 @@
 const DevConsole = require('@devConsole');
 const { Types } = require('mongoose');
-const devConsole = new DevConsole(__filename);
+const ApiError = require('app/error/ApiError');
 const { Article } = require('app/models');
+const devConsole = new DevConsole(__filename);
 
 class ArticleController {
     
@@ -18,11 +19,13 @@ class ArticleController {
     
     static async update(articleId, data) {
         try {
-            return await Article.findOneAndUpdate(
+            const result = await Article.findOneAndUpdate(
             {_id: new Types.ObjectId(articleId)},
             {$set: data},
             {new: true}
-            ).exec();
+            );
+            if(!result) throw new ApiError('NotFound', `Article with Id ${articleId} Not Found`);
+            return result
         }catch(error){
             devConsole.error('Error updating article: ', error.message);
             return Promise.reject(error);
@@ -43,8 +46,7 @@ class ArticleController {
                 searchCriteria.tags = { $in: searchCriteria.tags.split(',')};
             }
             return await Article.find(searchCriteria)
-            .populate('user')
-            .exec();
+            .populate('user');
         }catch(error){
             devConsole.error('Error searching articles: ', error.message);
             return Promise.reject(error);
