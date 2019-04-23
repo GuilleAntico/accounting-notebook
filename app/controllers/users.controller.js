@@ -2,7 +2,7 @@ const DevConsole = require('@devConsole');
 const devConsole = new DevConsole(__filename);
 const { User } = require('app/models');
 
-class UserController {
+class UsersController {
     
     static async create(data) {
         try {
@@ -18,4 +18,4 @@ class UserController {
 }
 
 
-module.exports = UserController;
+module.exports = UsersController;

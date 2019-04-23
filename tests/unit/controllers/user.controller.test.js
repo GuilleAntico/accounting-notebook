@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { User } = require('app/models');
-const UserController = require('app/controllers/user.controller');
+const UserController = require('app/controllers/users.controller');
 
 describe('UserController Unit Test', ()=> {
     let sandbox;

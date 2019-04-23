@@ -47,7 +47,7 @@ class Server {
             const mongodbConfig = config.get('mongodb');
             // Create mongoose connection
             const { connection } = await mongoose.connect(`mongodb://${mongodbConfig.host}/${mongodbConfig.name}`, { useNewUrlParser: true });
-            
+            mongoose.set('useFindAndModify', false);
             connection.on('open', ()=> devConsole.info('Database setup okay'));
             connection.on('error', ()=> devConsole.info('Database setup Error'));
             

@@ -19,15 +19,19 @@ class ApiError extends Error {
                 this.message = 'No token present or invalid in header';
                 break;
             case 'FacebookApiException':
-                this.code = 401;
+                this.code = 400;
                 this.message = message;
                 break;
             case 'InvalidParam':
-                this.code = 401;
+                this.code = 400;
                 this.message = `Invalid param ${message}`;
                 break;
+            case 'NotFound':
+                this.code = 422;
+                this.message = message || 'Not found';
+                break;
             case 'RequiredBody':
-                this.code = 401;
+                this.code = 400;
                 this.message = `The body is required.`;
                 break;
             default:
