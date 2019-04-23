@@ -1,11 +1,10 @@
 
-const UserController = require('app/controllers/user.controller');
+const userController = require('app/controllers/user.controller');
 const DevConsole = require('@devConsole');
 const devConsole = new DevConsole(__filename);
 const authenticate = require('@authenticate');
 
 module.exports = (app, express) => {
-    const userController = new UserController(app);
     const api            = express.Router();
     
     

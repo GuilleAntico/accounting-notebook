@@ -1,4 +1,4 @@
-const { Schema, SchemaTypes } = require('mongoose');
+const { model, Schema, SchemaTypes } = require('mongoose');
 require('mongoose-type-url');
 
 const userSchema = new Schema({
@@ -12,7 +12,7 @@ avatar: {
 }
 });
 
-module.exports = app => ({
-    model: app.get('mongoose').model('User', userSchema),
+module.exports = {
+    User: model('User', userSchema),
     schema: userSchema
-})
+}

@@ -1,15 +1,12 @@
 const DevConsole = require('@devConsole');
 const devConsole = new DevConsole(__filename);
+const { User } = require('app/models');
 
 class UserController {
-    constructor(app) {
-        this.User = app.get('models').User.model;
-        this.mongoose = app.get('mongoose');
-    }
     
-    async create(data) {
+    static async create(data) {
         try {
-            const user = new this.User(data);
+            const user = new User(data);
             await user.save();
             return user;
         }catch(error){

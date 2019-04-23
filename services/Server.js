@@ -47,12 +47,10 @@ class Server {
             const mongodbConfig = config.get('mongodb');
             // Create mongoose connection
             const { connection } = await mongoose.connect(`mongodb://${mongodbConfig.host}/${mongodbConfig.name}`, { useNewUrlParser: true });
-            app.set('mongoose', connection);
-    
-            // Setup models
-            const modelInstances = models(app);
-            app.set('models', modelInstances);
-            devConsole.info('Models setup');
+            
+            connection.on('open', ()=> devConsole.info('Database setup okay'));
+            connection.on('error', ()=> devConsole.info('Database setup Error'));
+            
         } catch(error) {
             devConsole.error('Error setting up Database: ');
             return Promise.reject(error)

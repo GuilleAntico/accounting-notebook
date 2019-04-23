@@ -4,7 +4,7 @@
   "description": "Articles node js REST Api",
   "main": "server.js",
   "scripts": {
-    "unit:test": "env LOCAL_TESTING=TRUE NODE_ENV=test mocha tests/unit/* --recursive -t 30000 --exit",
+    "unit:test": "env NODE_ENV=test mocha tests/bootstrap.js tests/unit/* --recursive -t 30000 --exit",
     "start": "node ./server.js",
     "start:dev": "./node_modules/.bin/nodemon ./server.js",
     "lint": "eslint .",
