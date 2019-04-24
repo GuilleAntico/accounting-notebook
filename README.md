@@ -6,14 +6,14 @@ Rest API to manage articles and users.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+## Prerequisites
 
 What things you need before running the software and how to install them
 
 - Mongodb
     - Create a database called "articles" 
     
-### Installing
+## Installing
 
 
 ```
@@ -30,7 +30,8 @@ Finally start the project
 If everything worked as expected you can visit [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
 and you will get a swagger playground.
 
-##Testing
+## Testing
+
 To run the unit testing suit just run.
 ```
     npm run unit:test
