@@ -8,8 +8,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Prerequisites
 
-What things you need before running the software and how to install them
+What you need before running the software
 
+- Node
+    - Check you node version, you need >= 0.10.5
 - Mongodb
     - Create a database called "articles" 
     
