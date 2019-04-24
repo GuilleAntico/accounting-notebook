@@ -48,7 +48,7 @@ class ArticleController {
             if(searchCriteria.tags){
                 searchCriteria.tags = { $in: searchCriteria.tags.split(',')};
             }
-            return await Article.find(searchCriteria)
+            return await Article.find(searchCriteria).lean()
             .populate('user');
         }catch(error){
             devConsole.error('Error searching articles: ', error.message);
