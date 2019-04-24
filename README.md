@@ -22,8 +22,8 @@ What you need before running the software
     npm install
     
 ```
-
-Finally start the project
+## Running 
+ start the project
   
 ```
     npm run start:dev
@@ -32,6 +32,13 @@ Finally start the project
 If everything worked as expected you can visit [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
 and you will get a swagger playground.
 
+## Swagger
+Since the API is private you'll need to authenticate before using it.
+When you open the swagger ui playground on the top right you'll find an `Authorize` button.
+Add the following apiKey `5CD4ED173E1C95FE763B753A297D5`. Now you can use it.
+
+Note: if you want to you the api through Postman, add the following header.
+`Authorization -> 5CD4ED173E1C95FE763B753A297D5` ( not bearer, just the key). 
 ## Testing
 
 To run the unit testing suit just run.
