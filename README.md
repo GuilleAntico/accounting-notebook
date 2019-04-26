@@ -1,6 +1,6 @@
-# Articles API
+# Accounting API
 
-Rest API to manage articles and users.
+Rest API to manage accounting for a single user.
 
 ## Getting Started
 
@@ -13,7 +13,7 @@ What you need before running the software
 - Node
     - Check you node version, you need >= 0.10.5
 - Mongodb
-    - Create a database called "articles" 
+    - Create a database called "accounting-notebook" 
     
 ## Installing
 
@@ -22,6 +22,7 @@ What you need before running the software
     npm install
     
 ```
+
 ## Running 
  start the project
   
@@ -29,22 +30,9 @@ What you need before running the software
     npm run start:dev
 ```
 
-If everything worked as expected you can visit [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
-and you will get a swagger playground.
+If everything worked as expected you can visit [http://localhost:5000/](http://localhost:5000)
+and you will get a UI to interact.
 
-## Swagger
-Since the API is private you'll need to authenticate before using it.
-When you open the swagger ui playground on the top right you'll find an `Authorize` button.
-Add the following apiKey `5CD4ED173E1C95FE763B753A297D5`. Now you can use it.
-
-Note: if you want to you the api through Postman, add the following header.
-`Authorization -> 5CD4ED173E1C95FE763B753A297D5` ( not bearer, just the key). 
-## Testing
-
-To run the unit testing suit just run.
-```
-    npm run unit:test
-```
 ## Author
 
 * **Guillermo Antico** 

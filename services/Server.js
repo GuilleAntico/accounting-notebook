@@ -3,17 +3,15 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const config = require('config');
-
-const port = config.get('port');
 const DevConsole = require('@devConsole');
+const path = require('path');
 
 const devConsole = new DevConsole(__filename);
+const port = config.get('port');
 const morganMiddleware = require('app/config/morgan');
 const routes = require('app/routes');
 const errorHandler = require('app/middlewares/errorHandler');
 const mongoose = require('mongoose');
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 
 class Server {
     static async setupExpress() {
@@ -30,10 +28,11 @@ class Server {
     
             // Setup Helmet
             app.use(helmet());
-            
+            app.use(express.static(path.join(__dirname, '../front/build')));
+    
             // Serve a basic text page at the root
-            app.get('/', (req, res)=>{
-                res.send('SampleApp API');
+            app.get('/', function (req, res) {
+                res.sendFile(path.join(__dirname, '../front/build', 'index.html'));
                 res.end();
             });
             devConsole.info('Express has been configured');
@@ -115,36 +114,6 @@ class Server {
         }
     }
     
-    static async setupSwagger(app) {
-        const options = {
-            swaggerDefinition: {
-                info: {
-                    title: 'Articles API',
-                    version: '1.0.0',
-                    description: 'Test Express API with swagger doc',
-                },
-                securityDefinitions: {
-                    ApiKeyAuth: {
-                        type: 'apiKey',
-                        name: 'Authorization',
-                        in: 'header'
-                    }
-                },
-                security: [
-                    { "ApiKeyAuth": []}
-                ],
-            },
-            apis: ['app/routes/*.route.js'],
-        };
-        const specs = swaggerJsdoc(options);
-        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-        app.get('/api-docs.json', (req, res) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(specs);
-        });
-    
-    }
-    
     static async setupErrorHandler(app) {
         try {
             app.use((error, req, res, next) => errorHandler(error, req, res, next));
@@ -173,7 +142,6 @@ class Server {
             await this.setupLogger(app);
             await this.setupCORS(app);
             await this.setupRoutes(app);
-            await this.setupSwagger(app);
             await this.setupErrorHandler(app);
             devConsole.info('Bootstrapping done!!');
             await this.startService(app);

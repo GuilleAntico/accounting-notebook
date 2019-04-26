@@ -27,9 +27,6 @@ module.exports = (req, res, next) => {
     };
     if(config.get('nodeEnv') === 'development'){
         devConsole.info('Forcing token match');
-        const headerToken = req.headers.authorization;
-        const envToken = config.get('apiToken');
-         if(!headerToken || headerToken !== envToken) throw new ApiError('AuthToken');
          return next();
     }
     return passport.authenticate('jwt', { session: false })(req, resOverride, next);
