@@ -21,13 +21,17 @@ What you need before running the software
 ```
     npm install
     
+    cd front/ 
+    
+    npm install
+    
 ```
 
 ## Running 
  start the project
   
 ```
-    npm run start:dev
+    npm run start
 ```
 
 If everything worked as expected you can visit [http://localhost:5000/](http://localhost:5000)
